@@ -25,5 +25,8 @@
     "prettier-config-rschristian": "latest",
     "wmr": "^3.7.2"
   },
-  "prettier": "prettier-config-rschristian"
+  "prettier": "prettier-config-rschristian",
+  "dependencies": {
+    "preact-transitioning": "^1.3.2"
+  }
 }

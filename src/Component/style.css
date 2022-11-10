@@ -1,9 +1,119 @@
-html,
-body {
-  font: 14px/1.21 'Helvetica Neue', arial, sans-serif;
-  font-weight: 400;
+.map {
+    width: 800px;
+    height: 500px;
+    background: url('./map.svg') center no-repeat;
+    position: relative;
 }
 
-h1 {
-  text-align: center;
+.pin {
+    position: absolute;
+    cursor: pointer;
+    width: 27px;
+    height: 40px;
+    background: url('./map-pin.svg') center no-repeat;
+    transform: translate(-13px, -40px);
+    top: 0;
+    left: 0;
+}
+
+.map__tooltip {
+    background: #91CD44;
+    position: absolute;
+    border-radius: 5px;
+    padding: 30px;
+    width: 230px;
+    bottom: 100%;
+    left: 50%;
+    transform: translate(-50%, -10px);
+    color: #fff;
+    text-align: center;
+}
+
+.map__tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%, 0px);
+    border-width: 10px;
+    border-style: solid;
+    border-color: #91CD44 transparent transparent transparent;
+}
+
+.map__tooltip > div:last-of-type p {
+    margin-bottom: 0;
+}
+
+.map__tooltip h3,
+.map__tooltip p,
+.map__tooltip h4 {
+    font-size: 14px;
+    line-height: 1;
+    margin-top: 0;
+}
+
+.map__tooltip h3,
+.map__tooltip p {
+    color: #fff;
+}
+
+.map__tooltip h3,
+.map__tooltip p {
+    margin-bottom: 30px;
+}
+
+.map__tooltip h4 {
+    color: #000;
+    margin-bottom: 10px;
+}
+
+.map__tooltip p {
+    font-style: italic;
+    line-height: 20px;
+}
+
+.categories {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+}
+
+
+.fade-appear-active,
+.fade-appear-done,
+.fade-enter-active,
+.fade-enter-done,
+.fade-exit {
+    opacity: 1;
+    transform: translate(0, 0);
+}
+
+.fade-appear,
+.fade-enter,
+.fade-exit-active,
+.fade-exit-done {
+    opacity: 0;
+    transform: translate(0, -20px);
+}
+
+.drop-pin-appear-active,
+.drop-pin-appear-done,
+.drop-pin-enter-active,
+.drop-pin-enter-done,
+.drop-pin-exit {
+    opacity: 1;
+    transform: translate(0, 0);
+}
+
+.drop-pin-appear,
+.drop-pin-enter,
+.drop-pin-exit-active,
+.drop-pin-exit-done {
+    opacity: 0;
+    transform: translate(0, -60px);
+}
+
+.transition {
+    position: relative;
+    transition: all .3s ease-in-out;
 }

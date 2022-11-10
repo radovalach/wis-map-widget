@@ -1,43 +1,74 @@
-<h1 align="center">Preact Widget Template</h1>
+<h1 align="center">Fancy Map Widget</h1>
+<h6 align="center">(...that my wife made me do)</h5>
 
-<br />
+## Co som pouzil
 
-Simple template used to set up a widget using Preact.
+- [Preact](https://preactjs.com/) - 3kB alternativa Reactu
 
-## General Background Information
+- [Preact-Habitat](https://github.com/zouhir/preact-habitat) - 0.9kB modul na vkladanie Preact komponent/widgetov do CMS apod.
 
-We use a few different projects and libraries here to set up a dev environment for building your widget, the main ones being:
+- [Preact-Transitioning](https://github.com/fakundo/preact-transitioning) - 4.5kB podpora pre CSS animacie
 
-- [WMR](https://github.com/preactjs/wmr) - Super fast and easy server to build and test your widget
+- [Preact Widget Template](https://github.com/rschristian/preact-widget) - boilerplate na ktorom som to postavil
 
-- [Microbundle](https://github.com/developit/microbundle) - Flexible and tiny production builds
+## Build
 
-- [Preact-Habitat](https://github.com/zouhir/preact-habitat) - Library for plugging in Preact components
+- `yarn install` - stiahne dependencies
 
-## Usage Instructions
+- `yarn start` - spusti development server na porte 3000
 
-- `yarn dev` - Starts development server on port 3000
+- `yarn build` - vytvori produkcny build do `dist/`
 
-- `yarn build` - Builds your widget for production use to `dist/`
+- `yarn serve` - spusti server na testovanie produkcneho buildu na porte 3000
 
-- `yarn serve` - Starts server to test the production build of your widget on port 3000
+(viac info viz odkazy vyssie)
 
-<br />
+Davam do repozitara aj hotovy build v zlozke `dist` pokial nepotrebujete nic menit...
 
-`src/widget-mount.js` defines how your component will mount to the page. You can of course change this to whatever you'd like, and see [preact-habitat's API docs](https://github.com/zouhir/preact-habitat#api-docs) to learn more about your options.
+## Pouzitie
 
-In `src/index.html` you'll see how to pass props to your component. The default setup has a color being passed that ends up in the style attribute of the widget, changing the text color.
+Neviem robit WP pluginy, tak som sa aspon snazil spravit to co najviac painless na vlozenie do WP. Zaroven ale aby sa dal obsah jednoducho spravovat priamo v CMS bez nutnosti opatovneho buildovania javascriptu.
 
-On build, the `src/index.html` files is copied over to `dist/` with a few minor adjustments: The `<script>` is updated to point at a valid source and the (now external) CSS file is referenced. If you change the name of the package or output formats, `scripts/post-build-widget.js` is something you'll want to update before testing your built output.
+Postupoval by som asi takto:
+- zbuildovany JS subor vlozit niekam do vasej custom WP temy
+- zbuildovane CSS pridat k vasemu custom CSS, upravit cestu k (2) obrazkom (SVG mapa a pin) ktore tiez niekam tam vlozite
+- tam kde potrebujete zobrazit mapu vlozit odkaz na script + predat mu obsah ako props (viz [dokumentacia preact-habitat](https://github.com/zouhir/preact-habitat) a ukazka pouzitia v `src/index.html`)
 
-## Notes
-
-- This template disables externals with `--external none` in the build command. If you're loading this into a Preact app then this is not what you want to do. Remove this flag
-
-- This template is set to only have Microbundle output its modern (ES2017) format. This may not be what you want to do, see [Microbundle#Output-Formats](https://github.com/developit/microbundle#-output-formats-) for more information on the subject
-
-Give it a star if this was helpful, let me know if you have any questions or issues
-
-## License
-
-MIT © Ryan Christian
+```html
+<div data-widget-host="habitat"> <!-- sem script vlozi mapu -->
+    <script type="text/props">
+        {
+            // podla tohto sa vygeneruju checkboxy s kategoriami. ID kategorie sa potom pouziva pri jednotlivych pobockach v krajinach
+            "categories": [
+                {
+                    "id": "research",
+                    "name": "R&D centers"
+                },
+                // ... other categories
+            ],
+            // zoznam krajin s pobockami
+            "countries": [
+                {
+                    "name": "Mexiko",
+                    "position": { // pozicia pobocky (pinu) na mape v pixeloch
+                        "left": 111,
+                        "top": 216
+                    },
+                    "locations": [
+                        {
+                            "name": "Mexico City",
+                            "categories": ["service"]
+                        },
+                        {
+                            "name": "Juarez",
+                            "categories": ["service", "manufacturing"]
+                        }
+                    ]
+                },
+                // ... other countries
+            ]
+        }
+    </script>
+</div>
+<script type="module" src="/widget-mount.js"></script>
+```
